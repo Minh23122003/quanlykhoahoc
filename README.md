@@ -1,0 +1,2 @@
+# quanlykhoahoc
+python django
