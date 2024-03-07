@@ -15,6 +15,8 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+MEDIA_ROOT = '%s/courses/static/' % BASE_DIR
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -36,9 +38,13 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'courses.apps.CoursesConfig',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
+CKEDITOR_UPLOAD_PATH = "ckeditors/images/"
 
+AUTH_USER_MODEL = 'courses.User'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -78,10 +84,20 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'courseapp',
         'USER': 'root',
-        'PASSWORD': 'Admin@123',
+        'PASSWORD': 'Minh2003@',
         'HOST': ''  # mặc định localhost
     }
 }
+
+import cloudinary
+
+cloudinary.config(
+    cloud_name="dyehwnue5",
+    api_key="944547956246838",
+    api_secret="RoCUyh0je2qJ79EnJMhu-3cmyIY"
+)
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -116,4 +132,4 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTH_USER_MODEL = 'courses.User'
+
