@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'courses.apps.CoursesConfig',
     'ckeditor',
     'ckeditor_uploader',
+    'rest_framework',
+    'drf_yasg',
 ]
 
 CKEDITOR_UPLOAD_PATH = "ckeditors/images/"
@@ -88,7 +90,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'courseapp',
         'USER': 'root',
-        'PASSWORD': 'Minh2003@',
+        'PASSWORD': 'Admin@123',
         'HOST': ''  # mặc định localhost
     }
 }
