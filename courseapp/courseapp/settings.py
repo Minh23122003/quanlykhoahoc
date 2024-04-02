@@ -46,7 +46,14 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'rest_framework',
     'drf_yasg',
+    'oauth2_provider',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+    )
+}
 
 CKEDITOR_UPLOAD_PATH = "ckeditors/images/"
 
@@ -90,7 +97,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'courseapp',
         'USER': 'root',
-        'PASSWORD': 'Minh2003@',
+        'PASSWORD': 'Admin@123',
         'HOST': ''  # mặc định localhost
     }
 }
@@ -142,4 +149,5 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
+CLIENT_ID = 'fcIiTnc8znff090sBfVBYOdUhZ9QjpcCkwkNQHIt'
+CLIENT_SECRET = 'jv0BC2vJhIHpiBBH7shWftJw9uqXgEljPGZzn6KgkoyQNZeYUWtOyBSNmcsB23FtLISt4cxHEXqMK61Fn9jbntdgJGrMpvOGhYeCz4SEJg8NwcJszZynkefPkBxdCtUR'

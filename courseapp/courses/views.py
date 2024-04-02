@@ -1,6 +1,6 @@
-from rest_framework import viewsets, generics, status, parsers
-from courses import serializers, pagination
-from courses.models import Category, Course, Lesson, User
+from rest_framework import viewsets, generics, status, parsers, permissions
+from courses import serializers, pagination, perms
+from courses.models import Category, Course, Lesson, User, Comment, Like
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -44,8 +44,51 @@ class LessonViewSet(viewsets.ViewSet, generics.RetrieveAPIView):
     queryset = Lesson.objects.prefetch_related('tags').filter(active=True)
     serializer_class = serializers.LessonDetailsSerializer
 
+    def get_permissions(self):
+        if self.action in ['add_comment']:
+            return [permissions.IsAuthenticated()]
+        return [permissions.AllowAny()]
 
-class UserViewSet(viewsets.ViewSet, generics.CreateAPIView):
+    @action(methods=['get'], url_path='comments', detail=True)
+    def get_comments(self, request, pk):
+        comments = self.get_object().comment_set.select_related('user').order_by('-id')
+
+        paginator = pagination.CommentPaginator()
+        page = paginator.paginate_queryset(comments, request)
+        if page is not None:
+            serializer = serializers.CommentSerializer(page, many=True)
+            return paginator.get_paginated_response(serializer.data)
+
+        return Response(serializers.CommentSerializer(comments, many=True).data)
+
+    @action(methods=['post'], url_path='comments', detail=True)
+    def add_comment(self, request, pk):
+        c= self.get_object().comment_set.create(content=request.data.get('content'), user=request.user)
+
+        return Response(serializers.CommentSerializer(c).data, status=status.HTTP_201_CREATED)
+
+
+class UserViewSet(viewsets.ViewSet, generics.CreateAPIView, generics.UpdateAPIView):
     queryset = User.objects.filter(is_active=True)
     serializer_class = serializers.UserSerializer
     parser_classes = [parsers.MultiPartParser]
+
+    def get_permissions(self):
+        if self.action in ['get_current_user']:
+            return [permissions.IsAuthenticated()]
+        return [permissions.AllowAny()]
+
+    @action(methods=['get', 'patch'], url_path='current-user', detail=False)
+    def get_current_user(self, request):
+        user = request.user
+        if request.method.__eq__('PATCH'):
+            for k, v in request.data.items():
+                setattr(user, k, v)
+                user.save()
+        return Response(serializers.UserSerializer(user).data)
+
+
+class CommentviewSet(viewsets.ViewSet, generics.DestroyAPIView, generics.UpdateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = serializers.CommentSerializer
+    permission_classes = [perms.CommentOwner]
