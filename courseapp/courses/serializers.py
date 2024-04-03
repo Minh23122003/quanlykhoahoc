@@ -42,7 +42,23 @@ class LessonDetailsSerializer(LessonSerializer):
         fields = LessonSerializer.Meta.fields + ['content', 'tags']
 
 
+class AuthenticatedLessonDetailsSerializer(LessonDetailsSerializer):
+    liked = serializers.SerializerMethodField()
+
+    def get_liked(self, lesson):
+        return lesson.like_set.filter(active=True).exists()
+
+    class Meta:
+        model = LessonDetailsSerializer.Meta.model
+        fields = LessonSerializer.Meta.fields + ['liked']
+
+
 class UserSerializer(serializers.ModelSerializer):
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        rep['avatar'] = instance.avatar.url
+
+        return rep
     def create(self, validated_data):
         data = validated_data.copy()
         user = User(**data)

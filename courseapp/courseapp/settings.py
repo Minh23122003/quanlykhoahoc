@@ -97,7 +97,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'courseapp',
         'USER': 'root',
-        'PASSWORD': 'Admin@123',
+        'PASSWORD': 'Minh2003@',
         'HOST': ''  # mặc định localhost
     }
 }
@@ -149,5 +149,5 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-CLIENT_ID = 'fcIiTnc8znff090sBfVBYOdUhZ9QjpcCkwkNQHIt'
-CLIENT_SECRET = 'jv0BC2vJhIHpiBBH7shWftJw9uqXgEljPGZzn6KgkoyQNZeYUWtOyBSNmcsB23FtLISt4cxHEXqMK61Fn9jbntdgJGrMpvOGhYeCz4SEJg8NwcJszZynkefPkBxdCtUR'
+CLIENT_ID = 'kSKqHG0AfXfYHEciUNTThdIFRpnbONyxTbJixivv'
+CLIENT_SECRET = 'nc0LEmKTDgiMPuVMJpPvgz6iydFflXJoiciq99jsW8sea1njd5KSc6LPDUlWkMc7Xi9d2eqvno6ytk4phY8ziNPdDZFGh9Vc96e48swtgPJnAReao0pg1RGtEOBCeWhS'
