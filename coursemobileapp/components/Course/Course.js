@@ -49,7 +49,7 @@ const Course = () => {
             </View>
 
             <View>
-                {courses.map(c => <List.Item key={c.id} title={c.subject} description={c.created_date} left={<Image style={MyStyles.avatar} source={{uri: c.image}}} />)}
+                {courses.map(c => <List.Item style={MyStyles.margin} key={c.id} title={c.subject} description={moment(c.created_date).fromNow()} left={() => <Image style={MyStyles.avatar} source={{uri: c.image}} />} />)}
                 {loading && <ActivityIndicator/>}
             </View>
         </View>
